@@ -42,7 +42,7 @@ export function UsersManager() {
   function addRole(e: React.FormEvent) {
     e.preventDefault();
     if (!roleForm.name) return;
-    createRole(roleForm.name, roleForm.permissions.split(",").map((s) => s.trim()).filter(Boolean));
+    createRole(roleForm.name, (roleForm.permissions ?? "").split(",").map((s) => s.trim()).filter(Boolean));
     setRoleForm({ name: "", permissions: "read" });
     refresh();
   }
