@@ -151,11 +151,11 @@ export default function ResidentePage() {
       const texto = busqueda.toLowerCase();
       const coincideTexto =
         !texto ||
-        r.nombre.toLowerCase().includes(texto) ||
-        r.apellido.toLowerCase().includes(texto) ||
-        r.email.toLowerCase().includes(texto) ||
+        (r.nombre ?? "").toLowerCase().includes(texto) ||
+        (r.apellido ?? "").toLowerCase().includes(texto) ||
+        (r.email ?? "").toLowerCase().includes(texto) ||
         r.documento.includes(texto) ||
-        r.inmueble.toLowerCase().includes(texto);
+        (r.inmueble ?? "").toLowerCase().includes(texto);
       const coincideRol = filtroRol === 'Todos' || r.rol === filtroRol;
       const coincideEstado = filtroEstado === 'Todos' || r.estado === filtroEstado;
       return coincideTexto && coincideRol && coincideEstado;
@@ -218,12 +218,12 @@ export default function ResidentePage() {
 
   function validarForm(): boolean {
     const errores: Partial<Record<keyof FormState, string>> = {};
-    if (!form.nombre.trim()) errores.nombre = 'El nombre es requerido';
-    if (!form.apellido.trim()) errores.apellido = 'El apellido es requerido';
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
+    if (!(form.nombre ?? "").trim()) errores.nombre = 'El nombre es requerido';
+    if (!(form.apellido ?? "").trim()) errores.apellido = 'El apellido es requerido';
+    if (!(form.email ?? "").trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
       errores.email = 'Email inválido';
-    if (!form.telefono.trim()) errores.telefono = 'El teléfono es requerido';
-    if (!form.documento.trim()) errores.documento = 'El documento es requerido';
+    if (!(form.telefono ?? "").trim()) errores.telefono = 'El teléfono es requerido';
+    if (!(form.documento ?? "").trim()) errores.documento = 'El documento es requerido';
     if (!form.inmuebleId) errores.inmuebleId = 'Seleccione un inmueble';
     if (!form.fechaIngreso) errores.fechaIngreso = 'La fecha de ingreso es requerida';
     setFormErrors(errores);
@@ -233,7 +233,7 @@ export default function ResidentePage() {
   function handleInmuebleChange(id: string) {
     const opcion = (INMUEBLES_OPCIONES ?? []).find((o) => o.id === id);
     if (!opcion) return;
-    const partes = opcion.label.split(' – ');
+    const partes = (opcion.label ?? "").split(' – ');
     setForm((f) => ({ ...f, inmuebleId: id, torre: partes[0] ?? '', inmueble: partes[1] ?? '' }));
   }
 
@@ -259,7 +259,7 @@ export default function ResidentePage() {
   }
 
   function agregarVehiculo() {
-    if (!vehiculoTemp.placa.trim()) return;
+    if (!(vehiculoTemp.placa ?? "").trim()) return;
     setForm((f) => ({ ...f, vehiculos: [...f.vehiculos, { ...vehiculoTemp }] }));
     setVehiculoTemp({ placa: '', marca: '', color: '' });
   }
@@ -269,7 +269,7 @@ export default function ResidentePage() {
   }
 
   function agregarMascota() {
-    if (!mascotaTemp.nombre.trim()) return;
+    if (!(mascotaTemp.nombre ?? "").trim()) return;
     setForm((f) => ({ ...f, mascotas: [...f.mascotas, { ...mascotaTemp }] }));
     setMascotaTemp({ nombre: '', especie: '', raza: '' });
   }
@@ -731,7 +731,7 @@ export default function ResidentePage() {
                       type="text"
                       placeholder="Placa"
                       value={vehiculoTemp.placa}
-                      onChange={(e) => setVehiculoTemp((v) => ({ ...v, placa: e.target.value.toUpperCase() }))}
+                      onChange={(e) => setVehiculoTemp((v) => ({ ...v, placa: (e.target.value ?? "").toUpperCase() }))}
                       className="px-3 py-2 text-sm border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     <input
