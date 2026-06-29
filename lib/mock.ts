@@ -570,3 +570,10 @@ export const pagos: Pago[] = [
     createdAt: "2026-07-01T00:00:00Z",
   },
 ];
+
+// exports de respaldo (entidad con página pero sin datos en el mock)
+export const EstadoResidente: any[] = [];
+export const Mascota: any[] = [];
+export const Residente: any[] = [];
+export const RolUsuario: any[] = [];
+export const Vehiculo: any[] = [];
