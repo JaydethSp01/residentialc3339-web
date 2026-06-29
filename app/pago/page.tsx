@@ -80,9 +80,9 @@ export default function PagoPage() {
     const q = search.toLowerCase();
     return (pagos ?? []).filter(p => {
       const matchSearch =
-        p.residente.toLowerCase().includes(q) ||
-        p.apartamento.toLowerCase().includes(q) ||
-        p.concepto.toLowerCase().includes(q);
+        (p.residente ?? "").toLowerCase().includes(q) ||
+        (p.apartamento ?? "").toLowerCase().includes(q) ||
+        (p.concepto ?? "").toLowerCase().includes(q);
       const matchEstado = filterEstado === 'todos' || p.estado === filterEstado;
       return matchSearch && matchEstado;
     });
